@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Shi-Fu-Mi</title>
+        <style>
+            *{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	background: #222;
+	color: #fff;
+	font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+  }
+  body {
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #eee;
+    background-color: #222;
+  }
+
+  h1 {
+    font-size: 4rem;
+    text-align: center;
+    position: absolute;
+	width: 100%;
+    top: 22%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+.jeu{
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	justify-content: center;
+	align-items: center;
+}
+
+.titre{
+	position: absolute;
+	top: 0;
+	font-size: 4rem;
+	z-index: 2;
+}
+
+.score{
+	display: flex;
+	width: 30vw;
+	justify-content:space-between;
+	position: absolute;
+	bottom: 16em;
+	z-index: 1;
+}
+
+.p-count,.c-count{
+	text-align: center;
+	font-size: 1.5rem;
+	margin-top: 1rem;
+}
+
+.options{
+	display: flex;
+	width: 50vw;
+	justify-content: space-evenly;
+	margin-top: 2rem;
+}
+
+.pierre, .papier, .ciseaux{
+	padding: 0.8rem;
+	width: 100px;
+	border-radius: 10px;
+	background: white;
+	color: black;
+	outline: none;
+	border-color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 2rem;
+    font-family: inherit;
+    padding: 3rem 1rem 3rem 1rem;
+}
+
+.pierre:hover, .papier:hover, .ciseaux:hover{
+	background: #000;
+	color: white;
+	outline: none;
+	border-color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.move{
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.reload {
+	display: none;
+	margin-top: 2rem;
+	padding: 1rem;
+	background: green;
+	outline: none;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.result{
+	margin-top: 20px;
+	font-size: 1.2rem;
+}
+
+@media screen and (max-width: 612px)
+{
+	.titre{
+		text-align: center;
+	}
+	.score{
+		position: absolute;
+		top: 200px;
+		width: 100vw;
+	}
+	.options{
+		width: 100vw;
+	}
+}
+        </style>
+    </head>
+
+    <body>
+        <h1>Shi-Fu-Mi</h1>
+
+        <section class="jeu">
+            <div class="mouvG">Essais : 10 </div>
+            <div class="options">
+                <button class="pierre">Pierre</button>
+                <button class="papier">Papier</button>
+                <button class="ciseaux">Ciseaux</button>
+            </div>
+            <div class="score">
+                <div class="scoreJoueur">
+                    <h2>Humain</h2>
+                    <p class="p-count count">0</p>
+                </div>	
+                <div class="scoreOrdi">
+                    <h2>Ordinateur</h2>
+                    <p class="c-count count">0</p>
+                </div>
+            </div>
+            <div class="result"></div>
+            <button class="reload"></button>
+        </section>
+        <script>
+            const jeu = () => {
+
+let scoreJoueur = 	0,
+    scoreOrdi 	= 	0,
+    moves 		= 	0;
+
+const lancerJeu = () => {
+
+    const btnPierre 	  = 	document.querySelector('.pierre'),
+          btnPapier    	  = 	document.querySelector('.papier'),
+          btnCiseaux 	  = 	document.querySelector('.ciseaux'),
+          optionsJoueur   = 	[btnPierre, btnPapier, btnCiseaux],
+          optionsOrdi 	  = 	['pierre','papier','ciseaux'];
+
+    optionsJoueur.forEach(option => {
+
+        option.addEventListener('click',function(){
+            const mouvementG = document.querySelector('.mouvG');
+            moves++;
+            mouvementG.innerText = `Essais : ${10-moves}`;
+
+            const choixNum = Math.floor(Math.random()*3);
+            const choixOrdi = optionsOrdi[choixNum];
+
+            gagnant(this.innerText,choixOrdi)
+            if(moves == 10){ finJeu(optionsJoueur,mouvementG); }
+        })
+    })
+}
+
+const gagnant = (joueur,ordi) => {
+
+    const 	result 				= 	document.querySelector('.result'),
+            tableauScoreHumain  = 	document.querySelector('.p-count'),
+            tableauScoreOrdi 	= 	document.querySelector('.c-count');
+    
+    joueur 	= 	joueur.toLowerCase();
+    ordi 	= 	ordi.toLowerCase();
+
+    if(joueur === ordi){
+        result.textContent = 'Égalité';
+
+    } else if(joueur == 'pierre') {
+        if(ordi == 'papier'){
+            result.textContent = 'L\'ordinateur gagne !';
+            scoreOrdi++;
+            tableauScoreOrdi.textContent = scoreOrdi;
+        } else {
+            result.textContent = 'L\'humain gagne'
+            scoreJoueur++;
+            tableauScoreHumain.textContent = scoreJoueur;
+        }
+
+    } else if(joueur == 'ciseaux') {
+        if(ordi == 'pierre'){
+            result.textContent = 'Ordinateur gagne';
+            scoreOrdi++;
+            tableauScoreOrdi.textContent = scoreOrdi;
+        } else {
+            result.textContent = 'Humain gagne';
+            scoreJoueur++;
+            tableauScoreHumain.textContent = scoreJoueur;
+        }
+
+    } else if(joueur == 'papier') {
+        if(ordi == 'ciseaux'){
+            result.textContent = 'Ordinateur gagne';
+            scoreOrdi++;
+            tableauScoreOrdi.textContent = scoreOrdi;
+        } else {
+            result.textContent = 'Humain gagne';
+            scoreJoueur++;
+            tableauScoreHumain.textContent = scoreJoueur;
+        }
+    }
+}
+
+const finJeu = (optionsJoueur,mouvementG) => {
+
+    const choixMouv = document.querySelector('.move'),
+          result 	= document.querySelector('.result'),
+          reloadBtn = document.querySelector('.reload');
+
+    optionsJoueur.forEach(option => {
+        option.style.display = 'none';
+    })
+
+    choixMouv.innerText 		= 	'Perdu !'
+    mouvementG.style.display 	= 	'none';
+
+    if(scoreJoueur > scoreOrdi) {
+        result.style.fontSize 	= 	'2rem';
+        result.innerText 		= 	'Gagné !'
+        result.style.color 		= 	'#308D46';
+
+    } else if(scoreJoueur < scoreOrdi) {
+        result.style.fontSize 	= 	'2rem';
+        result.innerText 		= 	'Perdu ... Game Over';
+        result.style.color 		= 	'red';
+
+    } else if(scoreJoueur == scoreOrdi){
+        result.style.fontSize 	= 	'2rem';
+        result.innerText 	  	= 	'Égalité';
+        result.style.color 	    = 	'grey';
+
+    } else {
+        result.style.fontSize 	= 	'2rem';
+        result.innerText 	  	= 	'Oups, jeu codé avec les pieds';
+        result.style.color 	  	= 	'grey';
+    }
+
+    reloadBtn.innerText 		= 	'Recommencer';
+    reloadBtn.style.display 	= 	'flex'
+
+    reloadBtn.addEventListener('click',() => {
+        window.location.reload();
+    })
+}
+lancerJeu();
+}
+jeu();
+        </script>
+    </body>
+    
+</html>
