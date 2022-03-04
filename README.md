@@ -1,5 +1,8 @@
 # CESI-JS
-## This repo contains the different activities done during the Front-End development module at CESI - Rouen
+## This repo contains the different activities done in the front-end development module at CESI - Rouen
+
+- A Node.js / Express app serves different exercices that are located in the 'front' directory.
+
 ---
 - Download / clone this project.
 ---
