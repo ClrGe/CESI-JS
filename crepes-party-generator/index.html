@@ -1,32 +1,205 @@
 <!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="Crepes/style.css" />
-    <titre>CESI - Crêpes</titre>
-  </head>
-  <body>
-    <h1>Crêpe Party generator</h1>
-      <div class="recipeGenerator">
-            <h2 id="guest">Nombre de personnes</h2>
-            <input id="number-guest" type="number" value="1" />
-            <button id="validationBtn">Générer</button>
+    <html lang="fr">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+            <style>
+                body {
+                    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                }
+                h1{
+                    text-align: center;
+                }
+                .wrapper {
+                    background-color: lightgray;
+                    border: 1px solid black;
+                }
+                .container {
+                    border: 1px solid black;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 0.6fr 1.4fr 1fr;
+                    grid-auto-columns: 2fr;
+                    grid-auto-rows: 1fr;
+                    gap: 0px 0px;
+                    grid-auto-flow: row;
+                    align-content: center;
+                    justify-content: center;
+                    grid-template-areas:
+                    "title ingredient"
+                    "title recette"
+                    "generator recette";
+                }
+                .recette {
+                    background-color: white;
+                    color: black;
+                    grid-area: recette;
+                    height: 300px;
+                    border: 0.5px solid black;
+                    border-radius: 20px;
+                }
+                .title { 
+                    grid-area: title;
+                }
+                .ingredient-list {  
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-rows: 1fr 1fr 1fr 1fr;
+                    gap: 2em 2em;
+                    grid-auto-flow: row;
+                    justify-content:last baseline;
+                    align-content: end;
+                    grid-template-areas:
+                    ". . ."
+                    "ingredient01 ingredient02 ingredient03"
+                    "ingredient04 ingredient05 ."
+                    ". . .";
+                    justify-self: center;
+                    align-self: center;
+                    align-content: center;
+                    justify-content: center;
+                    grid-area: ingredient;
+                }
+                .generator {
+                    display: grid;
+                    position: absolute;
+                    width: 45%;
+                    top: 100px;
+                    height: 40em;
+                    align-items: center;
+                    justify-content: center;
+                    grid-area: generator; 
+                    background-color: white;
+                    border: 0.5px solid black;
+                    border-radius: 20px;
+                }
+                .ingredient-farine { 
+                    background-color: white;
+                    grid-area: ingredient01;
+                    border: 0.5px solid black; 
+                    }
+                .ingredient-oeuf { 
+                    background-color: white;
+                    grid-area: ingredient02;
+                    border: 0.5px solid black;
+                }
+                .ingredient-lait { 
+                    background-color: white;
+                    grid-area: ingredient03;
+                    border: 0.5px solid black;
+                }
+                .ingredient-sucre { 
+                    background-color: white;
+                    grid-area: ingredient04;
+                    border: 0.5px solid black;
+                }
+                .ingredient-beurre { 
+                    background-color: white;
+                    grid-area: ingredient05;
+                    border: 0.5px solid black;
+                }
+            </style>
+        </head>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <div class="title"><h1>LE GÉNÉRATEUR</h1></div>
+                <div class="generator">
+                    <span- id="guest">Nombre d'invités</span>
+                    <input id="nbGuests" type="number" value="1" />
+                    <button id="generate" onclick="addCode()">GO</button>
+                </div>
+                <div id="nbreInvites"></div>
+                <div class="ingredient-list">
+                    <h1>LA RECETTE</h1>
+                    <div id="ingredient01" class="ingredient-farine"></div>
+                    <div id="ingredient02" class="ingredient-oeuf"></div>
+                    <div id="ingredient03" class="ingredient-lait"></div>
+                    <div id="ingredient04" class="ingredient-sucre"></div>
+                    <div id="ingredient05" class="ingredient-beurre"></div>
+                    <div id="ingredient0"></div>
+
+                </div>
+                <div class="recette">
+                    <ul>
+                        <li>Mettez la farine dans un saladier avec le sel et le sucre.</li><br />
+                        <li>Faites un puit au milieu et versez-y les œufs.</li><br />
+                        <li>Commencez à mélanger doucement. Quand le mélange devient épais, ajoutez le lait froid petit à petit.</li>
+                        <li>Quand tout le lait est mélangé, la pâte doit être assez fluide. Si elle vous paraît trop épaisse,
+                            rajoutez un peu de lait. Ajoutez ensuite le beurre fondu refroidi, mélangez bien.</li><br />
+                        <li>Faites cuire les crêpes dans une poêle chaude (par précaution légèrement huilée si votre poêle à
+                            crêpes n'est pas anti-adhésive). Versez une petite louche de pâte dans la poêle, faites un mouvement
+                            de rotation pour répartir la pâte sur toute la surface. Posez sur le feu et quand le tour de la
+                            crêpe se colore en roux clair, il est temps de la retourner.</li><br />
+                        <li>Laissez cuire environ une minute de ce côté et la crêpe est prête.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="ingredients">
-            <h2>Ingrédients</h2>
-            <div class="ingredient01"></div>
-            <div class="ingredient02"></div>
-            <div class="ingredient03"></div>
-            <div class="ingredient04"></div>
-            <div class="ingredient05"></div>
-        </div>
-        <p>
-            Dans un mélangeur, mélanger tous les ingrédients jusqu'à ce que la pâte soit lisse et homogène.
-            Chauffer une poêle antiadhésive d’environ 18 cm (7 po) de diamètre à feu moyen. Lorsque la poêle est chaude, la badigeonner de beurre avec un pinceau.
-            Pour chaque crêpe, verser environ 60 ml (1/4 tasse) de pâte au centre de la poêle. En faisant pivoter la poêle, répandre la pâte également pour recouvrir tout le fond. Lorsque le rebord se décolle facilement et commence à dorer, soit après environ 1 minute, retourner la crêpe à l’aide d’une spatule. Poursuivre la cuisson environ 30 secondes et retirer la crêpe de la poêle. Réserver sur une assiette. Couvrir de papier d’aluminium et réserver au chaud pour éviter qu'elles ne sèchent.
-        </p>
-    <script src="index.js"></script>
-  </body>
+        <script>
+            let button = document.getElementById("generate");
+            let farine  =   63,
+                oeuf    =   1,
+                lait    =   0.2,
+                sucre   =   0.5,
+                beurre  =   13;
+
+            function addCode() {
+
+                const   ing1Div = document.getElementById('ingredient01'),
+                        ing2Div = document.getElementById('ingredient02'),
+                        ing3Div = document.getElementById('ingredient03'),
+                        ing4Div = document.getElementById('ingredient04'),
+                        ing5Div = document.getElementById('ingredient05'),
+                        ing6Div = document.getElementById('ingredient06');
+
+                ing1Div.innerText = "Il faut " + farine + " g de farine";
+                ing2Div.innerText = "Il faut " + oeuf + " oeuf(s)";
+                ing3Div.innerText = "Il faut " + lait + " L de lait";
+                ing4Div.innerText = "Il faut " + sucre + " c.a.s de sucre";
+                ing5Div.innerText = "Il faut " + beurre + " g de beurre";
+                ing6Div.innerText = "";
+
+                console.log("Vous faîtes des crêpes pour " + nbGuests + " personnes");
+                console.log("Il faut " + farine + " g de farine");
+                console.log("Il faut " + oeuf + " oeufs");
+                console.log("Il faut " + lait.toFixed(2) + " L de lait ");
+                console.log("Il faut " + sucre + " g de sucre");
+                console.log("Il faut " + beurre + " g de beurre");
+                    
+                return "Next";
+            }
+            button.addEventListener("click", function (e) {
+                let nbGuests = document.getElementById("nbGuests").value;
+                if (nbGuests <= 0) {
+                    alert("Il faut renseigner un nombre valide")
+                } else {
+                    farine  =   63,
+                    oeuf    =   1,
+                    lait    =   0.2,
+                    sucre   =   0.5,
+                    beurre  =   13;
+                    let newValue = parseInt(nbGuests.value);
+                    nbGuests.value = newValue;
+
+                    farine  *=  nbGuests;
+                    oeuf    *=  nbGuests;
+                    lait    *=  nbGuests;
+                    sucre   *=  nbGuests;
+                    beurre  *=  nbGuests;
+
+                    addCode();
+
+                    return "Bon appétit";
+                }
+            });
+            console.log(button, nbGuests.value);
+
+            let  lotOeuf    =   12,
+                 achatOeuf  =   Math.ceil(oeuf / lotOeuf);
+                 
+            console.log(achatOeuf + " pack de " + lotOeuf + " oeufs");
+        </script>
+    </body>
 </html>
