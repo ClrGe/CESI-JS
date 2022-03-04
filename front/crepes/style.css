@@ -1,0 +1,82 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+h1{
+    text-align: center;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.6fr 1.4fr 1fr;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    align-content: center;
+    justify-content: center;
+    grid-template-areas:
+    "title ingredient"
+    "title recette"
+    "generator recette";
+}
+.recette {
+    background-color: white;
+    color: black;
+    grid-area: recette;
+    height: 300px;
+    border: 0.5px solid black;
+    border-radius: 20px;
+}
+.title { 
+    grid-area: title;
+}
+.ingredient-list {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    justify-content:last baseline;
+    align-content: end;
+    grid-template-areas:
+    ". . ."
+    "ingredient01 ingredient02 ingredient03"
+    "ingredient04 ingredient05 ."
+    ". . .";
+    justify-self: center;
+    align-self: center;
+    grid-area: ingredient;
+}
+.generator {
+    display: grid;
+    position: absolute;
+    width: 45%;
+    top: 100px;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    grid-area: generator; 
+    background-color: white;
+    border: 0.5px solid black;
+    border-radius: 20px;
+}
+.ingredient-farine { 
+    grid-area: ingredient01;
+    border: 0.5px solid black; 
+    }
+.ingredient-oeuf { 
+    grid-area: ingredient02;
+    border: 0.5px solid black;
+}
+.ingredient-lait { 
+    grid-area: ingredient03;
+    border: 0.5px solid black;
+}
+.ingredient-sucre { 
+    grid-area: ingredient04;
+    border: 0.5px solid black;
+}
+.ingredient-beurre { 
+    grid-area: ingredient05;
+    border: 0.5px solid black;
+}

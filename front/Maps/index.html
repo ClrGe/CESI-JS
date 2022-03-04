@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" />
+        <titre>CESI - Module Javascript !</titre>
+        <style>
+            body {
+                font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                color: #eee;
+                background-color: #222;
+            }
+            header {
+                font-size: 4rem;
+                text-align: center;
+                top: 12%;
+                padding-bottom: 0.5em;
+            }
+        </style>
+    </head>
+    <body>
+        <header>CESI from OpenStreetMaps</header>
+        <div class="customMap" id="mapdiv"></div>
+        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+        <script>
+        map = new OpenLayers.Map("mapdiv");
+        map.addLayer(new OpenLayers.Layer.OSM());
+        let lonLat = new OpenLayers.LonLat( 1.07466 ,49.38261 )
+                .transform(
+                new OpenLayers.Projection("EPSG:4326"),
+                map.getProjectionObject() 
+                );
+                let zoom=16;
+                let markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(lonLat));
+        map.setCenter (lonLat, zoom);
+        </script>
+  </body>
+</html>
