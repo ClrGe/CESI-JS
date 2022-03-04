@@ -3,37 +3,74 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" />
-        <titre>CESI - Module Javascript !</titre>
         <style>
+            body {
+                font-family: sans-serif;
+                text-justify: inter-word;
+                background-color: black;
+            }
+            .content {
+                background-color: white;
+            }
             .container {
-                display: grid;
-                border: 1px solid black;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 0.6fr 1.4fr 1fr;
-                grid-auto-columns: 2fr;
-                grid-auto-rows: 1fr;
-                gap: 0px 0px;
-                grid-auto-flow: row;
-                align-content: center;
+                display: flex;
+                align-items: center;
                 justify-content: center;
-                grid-template-areas:
-                "city"
-                "detailsWeather contentWeather"
-;
+                font-size: 2em;
+                padding-bottom: 3em;
+            }
+            #city {
+                padding-top: 1em;
+                font-weight: bold;
+                font-size: 3em;
+                text-align: center;
+            }
+            .refreshBtn {
+                height: 3em;
+                background-color: white;
+                border-radius: 5%;
+            }
+            .refreshBtn:hover {
+                transform: scale(1.5);
+                invert(100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .btn {
+                height: 100px;
+                position: relative;
+            }
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+            .refresh {
+                background-color: white;
+                border-radius: 5%;
             }
         </style>
     </head>
     <body>
-        <header>CESI from OpenStreetMaps</header>
-        <div class="customMap" id="mapdiv" style="height: 50%"></div>
-        <div class="container">
+        <div class="customMap" id="mapdiv" style="height: 70%;"></div>
+        <div class ="content">
             <div id="city"></div>
+            <div class="btn"><div class="center"><button class="refresh" onClick="window.location.reload();">Rafraîchir</button></div></div>
+            <div class="container">
             <div id="detailsWeather"></div>
             <div id="contentWeather"></div>
         </div>
+    </div>
         <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
         <script>
+            navigator.geolocation.getCurrentPosition((position) => {
+              let long  = position.coords.latitude;
+              let lat   = position.coords.longitude;
+            });
             map = new OpenLayers.Map("mapdiv");
             map.addLayer(new OpenLayers.Layer.OSM());
             let lonLat = new OpenLayers.LonLat( 1.07466 ,49.38261 )
@@ -49,7 +86,6 @@
         </script>
         <script type="text/javascript">
             let key = "79f6d9b456015830a44148d838673d46"
-    
             let apiUrl = 'http://api.openweathermap.org/data/2.5/weather?lat=49.38301053675909&lon=1.0754568074048432&appid=0e661d4c37d7f46f9393bc8bcabb0b7c';
             fetch(apiUrl).then(response => {
               return response.json();
@@ -65,5 +101,5 @@
               navigator.clipboard.writeText(window.location.href);
             }
           </script>
-  </body>
+    </body>
 </html>
