@@ -1,6 +1,5 @@
 # CESI-JS
 ## This repo contains the different activities done during the Front-End development module at CESI - Rouen
-###Build instructions
 ---
 - Download / clone this project.
 ---
